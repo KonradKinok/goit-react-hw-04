@@ -1,4 +1,3 @@
-// import React, { useEffect, useCallback, useState } from "react";
 import { default as ModalReact } from "react-modal";
 import "./Modal.scss";
 ModalReact.setAppElement("#root");
