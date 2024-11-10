@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import "./PixabayApi.scss";
 import { Searchbar } from "../Searchbar/Searchbar";
@@ -6,20 +6,7 @@ import { ImageGallery } from "../ImageGallery/ImageGallery";
 import { Modal } from "../Modal/Modal";
 import { Button } from "../Button/Button";
 import { Loader } from "../Loader/Loader";
-import axios from "axios";
-const apiKey = "43602379-82b2565bd0b0a0b53c6c265a8";
-
-interface Image {
-  id: number;
-  tags: string;
-  webformatURL: string;
-  largeImageURL: string;
-}
-
-interface FetchResponse {
-  hits: Image[];
-  totalHits: number;
-}
+import * as UnsplashFunction from "../../globalFunctions/unsplashFunctions";
 
 export function PixabayApi() {
   const [query, setQuery] = useState<string>("");
@@ -29,7 +16,7 @@ export function PixabayApi() {
   const [isButtonVisible, setIsButtonVisible] = useState<boolean>(false);
   const [imgUrlModal, setUrlModal] = useState<string>("");
   const [tagModal, setTagModal] = useState<string>("");
-  const [data, setData] = useState<Image[]>([]);
+  const [data, setData] = useState<UnsplashFunction.Image[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
@@ -68,24 +55,27 @@ export function PixabayApi() {
 
   useEffect(() => {
     handleLoader(true);
+    setError(null);
     const fetchPictures = async () => {
       try {
-        const response = await fetchPicturesPerPage(query, currentPage);
+        const response = await UnsplashFunction.fetchPicturesPerPage1(
+          query,
+          currentPage
+        );
         if (response) {
-          setData((prev) => [...prev, ...response.hits]);
-          const totalPages = Math.ceil(response.totalHits / 12);
+          setData((prev) => [...prev, ...response.results]);
+          const totalPages = response.total_pages;
           setTotalPages(totalPages);
           const showButton =
-            currentPage < totalPages && response.hits.length > 0;
+            currentPage < totalPages && response.results.length > 0;
           handleButton(showButton);
         }
-      } catch (errors: any) {
-        setError(errors.message);
-        console.log(
-          "%c Error ",
-          "color: white; background-color: #D33F49",
-          `${error}`,
-        );
+      } catch (errors: unknown) {
+        if (errors instanceof Error) {
+          setError(errors.message);
+        } else {
+          console.error("An unexpected error occurred");
+        }
       } finally {
         handleLoader(false);
       }
@@ -95,34 +85,23 @@ export function PixabayApi() {
 
   useEffect(() => {
     if (data.length > 0) {
-      toast(
-        `Info:\nAktualna strona: ${currentPage}\nLiczba stron: ${totalPages}\nLiczba obrazków na stronie: ${data.length}`,
-        { position: "top-right" },
-      );
+      const toastMessage = `Info:\nAktualna strona: ${currentPage}\nLiczba stron: ${totalPages}\nLiczba obrazków na stronie: ${data.length}`;
+      toast(toastMessage, {
+        duration: 4000,
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  async function fetchPicturesPerPage(
-    query: string,
-    currentPage: number,
-  ): Promise<FetchResponse | undefined> {
-    const searchParams = new URLSearchParams({
-      key: apiKey,
-      q: query,
-      image_type: "photo",
-      orientation: "horizontal",
-      per_page: "12",
-      page: currentPage.toString(),
-    });
-    if (query) {
-      const url = `https://pixabay.com/api/?${searchParams}`;
-      console.log(url);
-      const response = await axios.get(url);
-
-      return response.data;
+  useEffect(() => {
+    if (error) {
+      console.log(
+        "%c Error ",
+        "color: white; background-color: #D33F49",
+        `${error}`
+      );
     }
-    return;
-  }
+  }, [error]);
 
   return (
     <div className="app">
@@ -131,20 +110,17 @@ export function PixabayApi() {
         <p>Wystąpił błąd: {error}</p>
       ) : (
         <>
-          {isLoaderVisible ? (
-            <Loader isLoaderVisible={isLoaderVisible} />
-          ) : (
-            <>
-              <ImageGallery openModal={openModal} data={data} />
-              {isButtonVisible && (
-                <Button
-                  handlePagination={handlePagination}
-                  totalPages={totalPages}
-                  currentPage={currentPage}
-                />
-              )}
-            </>
-          )}
+          <>
+            <ImageGallery openModal={openModal} data={data} />
+            {isLoaderVisible && <Loader isLoaderVisible={isLoaderVisible} />}
+            {isButtonVisible && (
+              <Button
+                handlePagination={handlePagination}
+                totalPages={totalPages}
+                currentPage={currentPage}
+              />
+            )}
+          </>
         </>
       )}
       {isModalOpen && (
@@ -154,7 +130,7 @@ export function PixabayApi() {
           tagModal={tagModal}
         />
       )}
-      <Toaster></Toaster>
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 }

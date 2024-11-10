@@ -1,5 +1,5 @@
-import "./Button.scss";
 import React from "react";
+import "./Button.scss";
 
 interface ButtonProps {
   handlePagination: () => void;
@@ -12,6 +12,7 @@ export const Button: React.FC<ButtonProps> = ({
   totalPages,
   currentPage,
 }) => {
+  
   const handlePaginationButton = () => {
     handlePagination();
   };

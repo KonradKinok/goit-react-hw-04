@@ -1,16 +1,10 @@
 import "./ImageGallery.scss";
 import React from "react";
 import { ImageGalleryItem } from "../ImageGalleryItem/ImageGalleryItem";
-
-interface Image {
-  id: number;
-  tags: string;
-  webformatURL: string;
-  largeImageURL: string;
-}
+import * as UnsplashFunction from "../../globalFunctions/unsplashFunctions";
 
 interface ImageGalleryProps {
-  data: Image[];
+  data: UnsplashFunction.Image[];
   openModal: (imgUrl: string, tags: string) => void;
 }
 
@@ -24,9 +18,11 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
         data.map((image) => (
           <ImageGalleryItem
             key={image.id}
-            tags={image.tags}
-            webformatURL={image.webformatURL}
-            openModal={() => openModal(image.largeImageURL, image.tags)}
+            tags={image.alt_description}
+            webformatURL={image.urls.small}
+            openModal={() =>
+              openModal(image.urls.regular, image.alt_description)
+            }
           />
         ))}
     </ul>

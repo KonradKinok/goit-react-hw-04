@@ -1,6 +1,7 @@
 import "./Searchbar.scss";
 import { useState, ChangeEvent, MouseEvent } from "react";
-
+import toast from "react-hot-toast";
+import { FaSearch } from "react-icons/fa";
 interface SearchbarProps {
   handleSearch: (query: string) => void;
 }
@@ -9,6 +10,12 @@ export function Searchbar({ handleSearch }: SearchbarProps) {
   const [query, setQuery] = useState<string>("");
 
   const clickButtonSearch = (event: MouseEvent<HTMLButtonElement>) => {
+    if (query === "") {
+      const toastMessage = `Info:\nWpisz dane do wyszukiwania`;
+      toast(toastMessage, {
+        duration: 4000,
+      });
+    }
     event.preventDefault();
     handleSearch(query);
   };
@@ -25,9 +32,7 @@ export function Searchbar({ handleSearch }: SearchbarProps) {
           className="searchForm-button"
           onClick={clickButtonSearch}
         >
-          {/* <svg className="" width="16" height="16">
-            <use href={`${icon}#icon-search`} />
-          </svg> */}
+          <FaSearch className="searchForm-button-icon" />
         </button>
         <input
           className="searchForm-input"

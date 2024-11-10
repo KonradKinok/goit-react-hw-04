@@ -1,7 +1,7 @@
 # goit-react-hw-??
 
 Link do repozytorium:
-https://github.com/KonradKinok/react-ts-template
+https://github.com/KonradKinok/goit-react-hw-04
 
 Link do Vercel:
 https://vercel.com/konradkinoks-projects
