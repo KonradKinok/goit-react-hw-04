@@ -16,9 +16,9 @@
     max-height: calc(100vh - 24px);
 
     img {
-        max-height: calc(100vh - 24px); // Maksymalna wysokość obrazu
-        max-width: 100%; // Maksymalna szerokość obrazu
-        width: auto; // Zapewnia, że obraz będzie skalowany proporcjonalnie
-        height: auto; // Zapewnia, że obraz nie przekroczy wysokości
+        max-height: calc(100vh - 24px);
+        max-width: 100%;
+        width: auto;
+        height: auto;
     }
 }
