@@ -19,7 +19,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
           <ImageGalleryItem
             key={image.id}
             tags={image.alt_description}
-            webformatURL={image.urls.small}
+            smallPicture={image.urls.small}
             openModal={() =>
               openModal(image.urls.regular, image.alt_description)
             }

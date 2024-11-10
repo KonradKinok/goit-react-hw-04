@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import "./PixabayApi.scss";
 import { Searchbar } from "../Searchbar/Searchbar";
 import { ImageGallery } from "../ImageGallery/ImageGallery";
 import { Modal } from "../Modal/Modal";
 import { Button } from "../Button/Button";
 import { Loader } from "../Loader/Loader";
 import * as UnsplashFunction from "../../globalFunctions/unsplashFunctions";
+import "./UnsplashApp.scss";
 
 export function PixabayApi() {
   const [query, setQuery] = useState<string>("");
@@ -128,6 +128,7 @@ export function PixabayApi() {
           closeModal={closeModal}
           imgUrlModal={imgUrlModal}
           tagModal={tagModal}
+          isModalOpen={isModalOpen}
         />
       )}
       <Toaster position="top-right" reverseOrder={false} />

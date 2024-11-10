@@ -1,4 +1,4 @@
-import { PixabayApi } from "./components/PixabayApi/PixabayApi";
+import { PixabayApi } from "./components/UnsplashApp/UnsplashApp";
 
 function App() {
   return <PixabayApi />;
