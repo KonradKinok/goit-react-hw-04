@@ -1,6 +1,6 @@
-import { default as ModalReact } from "react-modal";
-import "./Modal.scss";
-ModalReact.setAppElement("#root");
+import Modal from "react-modal";
+import "./ModalPicture.scss";
+Modal.setAppElement("#root");
 // interface ModalProps {
 //   closeModal: () => void;
 //   imgUrlModal: string;
@@ -46,14 +46,14 @@ interface ModalReactProps {
   tagModal: string;
   isModalOpen: boolean;
 }
-export function Modal({
+export function ModalPicture({
   closeModal,
   imgUrlModal,
   tagModal,
   isModalOpen,
 }: ModalReactProps) {
   return (
-    <ModalReact
+    <Modal
       isOpen={isModalOpen}
       onRequestClose={closeModal}
       shouldCloseOnOverlayClick={true}
@@ -61,6 +61,6 @@ export function Modal({
       overlayClassName="overlay"
     >
       <img src={imgUrlModal} alt={tagModal} />
-    </ModalReact>
+    </Modal>
   );
 }

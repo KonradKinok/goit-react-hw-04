@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Searchbar } from "../Searchbar/Searchbar";
 import { ImageGallery } from "../ImageGallery/ImageGallery";
-import { Modal } from "../Modal/Modal";
+import { ModalPicture } from "../ModalPicture/ModalPicture";
 import { Button } from "../Button/Button";
 import { Loader } from "../Loader/Loader";
 import * as UnsplashFunction from "../../globalFunctions/unsplashFunctions";
@@ -124,7 +124,7 @@ export function PixabayApi() {
         </>
       )}
       {isModalOpen && (
-        <Modal
+        <ModalPicture
           closeModal={closeModal}
           imgUrlModal={imgUrlModal}
           tagModal={tagModal}
