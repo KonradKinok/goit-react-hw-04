@@ -69,6 +69,12 @@ export function PixabayApi() {
           const showButton =
             currentPage < totalPages && response.results.length > 0;
           handleButton(showButton);
+          if (response.total_pages === 0) {
+            const toastMessage = `Info:\nBrak wyników dla zapytania "${query}"`;
+            toast(toastMessage, {
+              duration: 4000,
+            });
+          }
         }
       } catch (errors: unknown) {
         if (errors instanceof Error) {
