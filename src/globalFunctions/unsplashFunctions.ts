@@ -16,9 +16,9 @@ clientAxiosUnsplash.interceptors.request.use((config) => {
 interface Urls {
     full: string;
     raw: string;
-    regular: string; 
-    small: string; 
-    small_s3: string; 
+    regular: string;
+    small: string;
+    small_s3: string;
     thumb: string;
 }
 
@@ -38,18 +38,15 @@ export async function fetchPicturesPerPage1(
     query: string,
     currentPage: number
 ): Promise<FetchResponse | undefined> {
+    console.log("Klucz Api: ", apiKeyUnsplash)
     const searchParams = new URLSearchParams({
-        query: query,
-        //   image_type: "photo",
-        //   orientation: "horizontal",
-          per_page: "10",
-          page: currentPage.toString(),
+        query: encodeURIComponent(query),
+        per_page: "10",
+        page: currentPage.toString(),
     });
     if (query) {
         const url = `?${searchParams}`;
-        console.log(url);
         const response = await clientAxiosUnsplash.get(url);
-        
         console.log(response.data);
         return response.data;
     }
