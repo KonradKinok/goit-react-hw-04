@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 const apiKeyUnsplash = import.meta.env.VITE_ACCESS_KEY;
+
 const clientAxiosUnsplash: AxiosInstance = axios.create({
     baseURL: `https://api.unsplash.com/search/photos`,
     params: {
@@ -38,7 +39,6 @@ export async function fetchPicturesPerPage1(
     query: string,
     currentPage: number
 ): Promise<FetchResponse | undefined> {
-    console.log("Klucz Api: ", apiKeyUnsplash)
     const searchParams = new URLSearchParams({
         query: encodeURIComponent(query),
         per_page: "10",

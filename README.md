@@ -4,7 +4,7 @@ Link do repozytorium:
 https://github.com/KonradKinok/goit-react-hw-04
 
 Link do Vercel:
-https://vercel.com/konradkinoks-projects
+https://goit-react-hw-04-inky-six.vercel.app/
 
 # React + TypeScript + Vite
 
