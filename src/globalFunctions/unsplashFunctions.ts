@@ -52,3 +52,4 @@ export async function fetchPicturesPerPage1(
     }
     return;
 }
+

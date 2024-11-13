@@ -35,6 +35,16 @@ export function PixabayApi() {
     setCurrentPage((prev) => prev + 1);
   };
 
+  useEffect(() => {
+    if (currentPage !== 1) {
+      window.scrollTo({
+        top: window.scrollY + 600,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  }, [currentPage, data]);
+
   const handleLoader = (isLoaderVisible: boolean) => {
     setIsLoaderVisible(isLoaderVisible);
   };
