@@ -10,13 +10,15 @@ export function Searchbar({ handleSearch }: SearchbarProps) {
   const [query, setQuery] = useState<string>("");
 
   const clickButtonSearch = (event: MouseEvent<HTMLButtonElement>) => {
-    if (query === "") {
+    event.preventDefault();
+
+    if (query.trim() === "") {
       const toastMessage = `Info:\nWpisz dane do wyszukiwania`;
       toast(toastMessage, {
         duration: 4000,
       });
+      return;
     }
-    event.preventDefault();
     handleSearch(query);
   };
 
