@@ -41,7 +41,7 @@ export async function fetchPicturesPerPage1(
 ): Promise<FetchResponse | undefined> {
     const searchParams = new URLSearchParams({
         query: encodeURIComponent(query),
-        per_page: "10",
+        per_page: "30",
         page: currentPage.toString(),
     });
     if (query) {
