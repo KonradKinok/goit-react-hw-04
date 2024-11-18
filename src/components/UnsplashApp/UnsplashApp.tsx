@@ -8,7 +8,7 @@ import { Loader } from "../Loader/Loader";
 import * as UnsplashFunction from "../../globalFunctions/unsplashFunctions";
 import "./UnsplashApp.scss";
 
-export function PixabayApi() {
+export function UnsplashApp() {
   const [query, setQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

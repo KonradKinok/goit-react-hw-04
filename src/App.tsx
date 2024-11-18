@@ -1,7 +1,7 @@
-import { PixabayApi } from "./components/UnsplashApp/UnsplashApp";
+import { UnsplashApp } from "./components/UnsplashApp/UnsplashApp";
 
 function App() {
-  return <PixabayApi />;
+  return <UnsplashApp />;
 }
 
 export default App;
