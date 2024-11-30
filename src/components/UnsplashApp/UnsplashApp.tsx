@@ -5,10 +5,12 @@ import { ImageGallery } from "../ImageGallery/ImageGallery";
 import { ModalPicture } from "../ModalPicture/ModalPicture";
 import { Button } from "../Button/Button";
 import { Loader } from "../Loader/Loader";
+import { useOptionsImageContext } from "../Context/useOptionsImage";
 import * as UnsplashFunction from "../../globalFunctions/unsplashFunctions";
 import "./UnsplashApp.scss";
 
 export function UnsplashApp() {
+  const { options } = useOptionsImageContext();
   const [query, setQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -34,6 +36,15 @@ export function UnsplashApp() {
   const handlePagination = () => {
     setCurrentPage((prev) => prev + 1);
   };
+
+  useEffect(() => {
+    // setQuery("");
+    setCurrentPage(1);
+    setData([]);
+    setTotalPages(0);
+    setIsButtonVisible(false);
+    setError(null);
+  }, [options]);
 
   useEffect(() => {
     if (currentPage !== 1) {
@@ -70,7 +81,8 @@ export function UnsplashApp() {
       try {
         const response = await UnsplashFunction.fetchPicturesPerPage1(
           query,
-          currentPage
+          currentPage,
+          options
         );
         if (response) {
           setData((prev) => [...prev, ...response.results]);
@@ -97,7 +109,7 @@ export function UnsplashApp() {
       }
     };
     fetchPictures();
-  }, [query, currentPage]);
+  }, [query, currentPage, options]);
 
   useEffect(() => {
     if (data.length > 0) {

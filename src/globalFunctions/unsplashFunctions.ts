@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 const apiKeyUnsplash = import.meta.env.VITE_ACCESS_KEY;
-
+import { Options } from "../components/Context/ImageProvider";
 const clientAxiosUnsplash: AxiosInstance = axios.create({
     baseURL: `https://api.unsplash.com/search/photos`,
     params: {
@@ -37,13 +37,21 @@ interface FetchResponse {
 
 export async function fetchPicturesPerPage1(
     query: string,
-    currentPage: number
+    currentPage: number,
+    options:Options,
 ): Promise<FetchResponse | undefined> {
     const searchParams = new URLSearchParams({
         query: encodeURIComponent(query),
         per_page: "30",
         page: currentPage.toString(),
     });
+    // Dodajemy parametr orientation tylko, jeśli jego wartość nie jest pusta
+    if (options.orientation) {
+        searchParams.append("orientation", options.orientation);
+    }
+    if (options.color) {
+        searchParams.append("color", options.color);
+    }
     if (query) {
         const url = `?${searchParams}`;
         const response = await clientAxiosUnsplash.get(url);
