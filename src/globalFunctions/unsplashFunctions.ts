@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 const apiKeyUnsplash = import.meta.env.VITE_ACCESS_KEY;
-import { Options } from "../components/Context/ImageProvider";
+import type { Options } from "../components/Context/ImageProvider";
 const clientAxiosUnsplash: AxiosInstance = axios.create({
     baseURL: `https://api.unsplash.com/search/photos`,
     params: {
