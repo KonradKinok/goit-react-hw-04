@@ -3,7 +3,7 @@ import { useOptionsImageContext } from "../Context/useOptionsImage";
 import { LabelModalOptions } from "../LabelModalOptions/LabelModalOptions";
 import { colorsInputTable } from "../LabelModalOptions/colorsInputTable";
 import scss from "./ModalOptions.module.scss";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 interface ModalOptionsProps {
   isModalOptionsOpen: boolean; // Typ dla isModalOptionsOpen
@@ -47,17 +47,41 @@ export const ModalOptions: React.FC<ModalOptionsProps> = ({
       return prev;
     });
   };
+  const handleEsc = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeModalOptions();
+      }
+    },
+    [closeModalOptions]
+  );
 
+  useEffect(() => {
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [handleEsc]);
+  const handleClickOutside = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      closeModalOptions();
+    }
+    const a = event.target;
+    const b = event.currentTarget;
+    console.log({ a }, { b });
+  };
   return (
     <div
       className={`${scss["container-modal-options"]} 
       ${isModalOptionsOpen ? "" : scss["is-hide"]}`}
+      onClick={handleClickOutside}
     >
-      <IoIosCloseCircle
-        className={scss["exit-icon-modal-options"]}
-        onClick={() => closeModalOptions()}
-      />
-      <form action="">
+      <form action="" className={scss["form-modal-options"]}>
+        <IoIosCloseCircle
+          className={scss["exit-icon-modal-options"]}
+          onClick={() => closeModalOptions()}
+        />
         <p className={scss["container-orentation-title"]}>Options:</p>
         <div className={scss["container-orentation-modal-options"]}>
           <p className={scss["container-orentation-title"]}>Orientation:</p>
@@ -150,10 +174,9 @@ export const ModalOptions: React.FC<ModalOptionsProps> = ({
             />
           ))}
         </div>
+        <p>Selected orientation: {options.orientation || "all"}</p>
+        <p>Selected color: {options.color || "all"}</p>
       </form>
-
-      <p>Selected orientation: {options.orientation || "all"}</p>
-      <p>Selected color: {options.color || "all"}</p>
     </div>
   );
 };

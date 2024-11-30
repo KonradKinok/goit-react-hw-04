@@ -3,7 +3,7 @@ import { useState, ChangeEvent, MouseEvent } from "react";
 import toast from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import { FaCog } from "react-icons/fa";
-
+import { useOptionsImageContext } from "../Context/useOptionsImage";
 import { useToggle } from "../hooks/useToggle";
 import { ModalOptions } from "../ModalOptions/ModalOptions";
 
@@ -12,6 +12,7 @@ interface SearchbarProps {
 }
 
 export function Searchbar({ handleSearch }: SearchbarProps) {
+  const { options } = useOptionsImageContext();
   const [query, setQuery] = useState<string>("");
   const {
     isOpenModal: isModalOptionsOpen,
@@ -67,7 +68,13 @@ export function Searchbar({ handleSearch }: SearchbarProps) {
           <FaCog className="searchForm-button-icon" />
         </button>
       </form>
-
+      <div className="searchForm-options-container">
+        {Object.entries(options).map(([key, value]) => (
+          <p key={key}>
+            {key} : {value ? value : "all"}
+          </p>
+        ))}
+      </div>
       <ModalOptions
         isModalOptionsOpen={isModalOptionsOpen}
         closeModalOptions={closeModalOptions}
