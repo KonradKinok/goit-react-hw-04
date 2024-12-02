@@ -14,7 +14,7 @@ clientAxiosUnsplash.interceptors.request.use((config) => {
     return config;
 });
 
-interface Urls {
+export interface Urls {
     full: string;
     raw: string;
     regular: string;

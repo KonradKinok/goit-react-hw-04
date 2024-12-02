@@ -5,6 +5,7 @@ import { ImageGallery } from "../ImageGallery/ImageGallery";
 import { ModalPicture } from "../ModalPicture/ModalPicture";
 import { Button } from "../Button/Button";
 import { Loader } from "../Loader/Loader";
+import type { Urls } from "../../globalFunctions/unsplashFunctions";
 import { useOptionsImageContext } from "../Context/useOptionsImage";
 import * as UnsplashFunction from "../../globalFunctions/unsplashFunctions";
 import "./UnsplashApp.scss";
@@ -64,10 +65,15 @@ export function UnsplashApp() {
     setIsButtonVisible(isButtonVisible);
   };
 
-  const openModal = (imgUrlModal: string, tagModal: string) => {
+  const openModal = (
+    imgUrlModal: string,
+    tagModal: string,
+    imagesUrls: Urls
+  ) => {
     setUrlModal(imgUrlModal);
     setTagModal(tagModal);
     setIsModalOpen(true);
+    console.log(tagModal, { imagesUrls });
   };
 
   const closeModal = () => {
